@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
 
       <main>
-        <p class="text-9xl dark:text-white font-thin dark:text-white">
+        <p className="text-9xl dark:text-white font-thin dark:text-white">
           Home Page
         </p>
       </main>
