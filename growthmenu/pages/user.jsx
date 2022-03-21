@@ -37,7 +37,13 @@ const User = () => {
     return (
         <article>
             <h2>User Profile</h2>
-            <li>{user?.user_id}</li>
+            <li>{user?.id}</li>
+            <li>{user?.brand_name}</li>
+            <li>{user?.business_category}</li>
+            <li>{user?.phone}</li>
+            <li>{user?.website_url}</li>
+            <li>{user?.address}</li>
+
             {/*{users?.length*/}
             {/*    ? (*/}
             {/*        <ul>*/}
