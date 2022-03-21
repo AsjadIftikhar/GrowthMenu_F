@@ -5,7 +5,7 @@ function Footer(props) {
         <div>
 
             <footer className="bg-DarkPurple">
-                <div className="grid grid-cols-2 gap-8 py-8 px-48 md:grid-cols-4">
+                <div className="grid grid-cols-2 gap-8 py-8 px-72 md:grid-cols-4">
                     <div>
                         <span
                             className="self-center text-2xl font-semibold text-white whitespace-nowrap dark:text-white">
@@ -78,7 +78,7 @@ function Footer(props) {
                         </ul>
                     </div>
                 </div>
-                <div className="py-4 px-4 bg-gradient-to-r from-DarkBlue via-LightBlue to-LightYellow md:flex md:items-center md:justify-between">
+                <div className="py-4 px-16 bg-gradient-to-r from-DarkBlue via-LightBlue to-LightYellow md:flex md:items-center md:justify-between">
                     <span className="text-sm text-gray-300 sm:text-center">© 2022 <a href="https://flowbite.com">GrowthMenu™</a>. All Rights Reserved.
                     </span>
                     <div className="flex mt-4 space-x-6 sm:justify-center md:mt-0">
