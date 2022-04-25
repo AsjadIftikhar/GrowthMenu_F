@@ -10,6 +10,7 @@ import Navbar from "../components/navbar";
 import Breadcrumb from "../components/breadcrumb";
 import Footer from "../components/footer";
 import Script from "next/script";
+import Image from "next/image";
 
 const LOGIN_URL = '/auth/jwt/create/';
 
@@ -76,7 +77,9 @@ const Login = () => {
             <Navbar/>
             <Breadcrumb/>
             <div className="flex flex-row">
-                <div className="basis-3/7"/>
+                <div className="px-48 py-8 basis-3/7">
+                    <Image src="/business.svg" width={450} height={450}/>
+                </div>
                 <div className="basis-2/7 py-12 px-4">
                         <section>
                             <p ref={errRef} className="">{errMsg}</p>
