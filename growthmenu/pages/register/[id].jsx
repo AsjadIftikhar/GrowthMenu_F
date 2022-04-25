@@ -70,8 +70,7 @@ const Profile = () => {
             // console.log(response?.data);
             // console.log(response?.accessToken);
             // console.log(JSON.stringify(response))
-            // setSuccess(true);
-            router.push('/login')
+            setSuccess(true);
             //clear state and controlled inputs
             //need value attrib on inputs for this
             // setUsername('');
@@ -148,7 +147,7 @@ const Profile = () => {
 
                                 <div className="grid xl:grid-cols-2 xl:gap-6">
                                     <div className="relative z-0 mb-6 w-full group">
-                                        <input type="tel" //pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone"
+                                        <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="floating_phone"
                                                id="floating_phone"
                                                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                             // autoComplete="off"

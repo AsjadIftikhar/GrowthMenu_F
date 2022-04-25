@@ -1,11 +1,15 @@
-import '../styles/globals.css'
-import {AuthProvider} from "../context/AuthProvider";
+import "../styles/globals.css";
+import { AuthProvider } from "../context/AuthProvider";
+import Layout from "../components/layout/layout";
 
 function MyApp({ Component, pageProps }) {
   return (
-      <AuthProvider>
-      <Component {...pageProps} />
-      </AuthProvider>);
+    <AuthProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </AuthProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
