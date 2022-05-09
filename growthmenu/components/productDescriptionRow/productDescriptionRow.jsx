@@ -34,7 +34,7 @@ const ProductDescriptionRow = () => {
             <div className='text-base font-normal'>Delivery Date:<span className='text-Grey_1'>12 Nov 2021</span>  </div>
           </div>
         </div>
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between mr-8'>
           <div className='w-24 pr-2'>
           <Button buttonText={"In progress"} backgroundColor="bg-LightGreen" textColor={"text-white"} borderRadius="rounded-xl"/>
           </div>
