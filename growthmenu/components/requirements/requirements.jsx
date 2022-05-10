@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import Button from "../button/button";
 import TextArea from "../textarea/textarea";
 import axios from "../../pages/api/axios";
-import {useRouter} from "next/router";
+import axiosPrivate from "../../pages/api/axios";
 
-const PLACE_ORDER_URL = '/api/order/';
+import { useRouter } from "next/router";
+
+const PLACE_ORDER_URL = '/api/orders/';
 const Requirment = ({category}) => {
 
     const [due_at, setDue_at] = useState();
@@ -34,7 +36,7 @@ const Requirment = ({category}) => {
             }
         );
 
-        router.push("/order/")
+        router.push("/order-list/")
 
     }
 
