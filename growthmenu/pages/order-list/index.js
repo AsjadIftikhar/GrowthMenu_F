@@ -5,22 +5,34 @@ import Plus from '../../public/images/plus'
 import Tab from '../../components/tab/tab'
 import ProductDescriptiontable from '../../components/productTable/productTable';
 import axios from "../api/axios";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const ORDER_LIST_URL = '/api/orders';
+const ORDER_LIST_URL = '/api/orders/order_list/';
 
 const OrderDetail = () => {
 
     const [orders, setOrders] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
+
 
     useEffect(() => {
+        let isMounted = true;
+        const controller = new AbortController();
         async function getOrders() {
-            const order_list = await axios.get(ORDER_LIST_URL)
+            const order_list = await axiosPrivate.get(ORDER_LIST_URL, {
+                signal: controller.signal
+            });
             console.log(order_list.data)
-            setOrders(order_list.data)
+            // setOrders(order_list.data)
+            isMounted && setOrders(order_list.data);
         }
 
-        getOrders()
-    }, []);
+        getOrders();
+        return () => {
+            isMounted = false;
+            controller.abort();
+        }
+    }, [])
 
     return (
         <React.Fragment>
