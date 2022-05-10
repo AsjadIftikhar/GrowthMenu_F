@@ -78,7 +78,7 @@ const Login = () => {
             <Breadcrumb/>
             <div className="flex flex-row">
                 <div className="px-48 py-8 basis-3/7">
-                    <Image src="/business.svg" width={450} height={450}/>
+                    <Image src="/images/business.svg" width={450} height={450}/>
                 </div>
                 <div className="basis-2/7 py-12 px-4">
                         <section>

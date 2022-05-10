@@ -17,7 +17,7 @@ export const SideBarData = [
   {
     icon: (color) => <Document color={color} />,
     heading: "My Orders",
-    path: "/myOrders",
+    path: "/order-list",
   },
   {
     icon: (color) => <Billing color={color} />,

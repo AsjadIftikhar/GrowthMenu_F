@@ -6,6 +6,7 @@ import axios from '../api/axios';
 import Navbar from "../../components/navbar";
 import Breadcrumb from "../../components/breadcrumb";
 import Footer from "../../components/footer";
+import Image from "next/image";
 
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,24}$/;
@@ -93,7 +94,9 @@ const Profile = () => {
             <Navbar/>
             <Breadcrumb/>
             <div className="flex flex-row">
-                <div className="basis-3/7"/>
+                <div className="px-48 py-8 basis-3/7">
+                    <Image src="/images/business.svg" width={450} height={450}/>
+                </div>
                 <div className="basis-3/7 py-12 px-4">
                     {success ? (
                         <section>

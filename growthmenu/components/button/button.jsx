@@ -5,7 +5,7 @@ const Button = ({ textColor, backgroundColor, buttonText, onClick }) => {
     <div>
       <button
         type="button"
-        className={`${textColor} ${backgroundColor}  font-medium rounded-full text-sm px-5 w-full py-2.5 text-center mr-2 mb-2 `}
+        className={`${textColor} ${backgroundColor}  font-medium rounded-xl text-sm px-5 w-full py-2.5 text-center mr-2 mb-2 drop-shadow-xl `}
         onClick={onClick}
       >
         {buttonText}
