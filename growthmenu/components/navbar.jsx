@@ -9,7 +9,7 @@ function Navbar(props) {
           <Link href="/" className="flex items-center">
             <span className="self-center text-2xl font-semibold text-DarkBlue whitespace-nowrap dark:text-white">
               Growth
-              <span className="text-LightBlue">Menu</span>
+              <span className="text-LightBlue_1">Menu</span>
             </span>
           </Link>
           <div className="flex md:order-2 mt-4">

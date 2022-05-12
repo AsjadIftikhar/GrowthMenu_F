@@ -7,16 +7,18 @@ import Image from "next/image"
 import axios from '../../api/axios';
 import {axiosPrivate} from "../../api/axios";
 // import {orders} from "./orderManagementdata";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const ORDER_LIST_URL = '/api/orders';
+const ORDER_LIST_URL = '/api/orders/';
 
 const OrderManagement = () => {
 
     const [orders, setOrders] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         async function getOrders() {
-            const order_list = await axios.get(ORDER_LIST_URL)
+            const order_list = await axiosPrivate.get(ORDER_LIST_URL)
             console.log(order_list.data)
             setOrders(order_list.data)
         }

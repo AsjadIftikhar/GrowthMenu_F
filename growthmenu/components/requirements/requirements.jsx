@@ -5,14 +5,16 @@ import axios from "../../pages/api/axios";
 import axiosPrivate from "../../pages/api/axios";
 
 import { useRouter } from "next/router";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const PLACE_ORDER_URL = '/api/orders/';
+const PLACE_ORDER_URL = '/api/orders/order_list/';
 const Requirment = ({category}) => {
 
     const [due_at, setDue_at] = useState();
     const [requirements, setRequirements] = useState();
     const [details, setDetails] = useState();
     const [customer, setCustomer] = useState();
+    const axiosPrivate = useAxiosPrivate();
 
     const router = useRouter();
 
@@ -21,7 +23,7 @@ const Requirment = ({category}) => {
         console.log(category)
 
 
-        const response = await axios.post(PLACE_ORDER_URL,
+        const response = await axiosPrivate.post(PLACE_ORDER_URL,
             JSON.stringify({
                 "category": category.replace("-", " "),
                 "due_at": "2022-04-29",

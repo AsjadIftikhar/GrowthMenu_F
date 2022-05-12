@@ -29,4 +29,9 @@ export const SideBarData = [
     heading: "My Account",
     path: "/account",
   },
+  {
+    icon: (color) => <User color={color} />,
+    heading: "Order Management",
+    path: "/orderManagement",
+  },
 ];

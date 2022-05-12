@@ -54,7 +54,7 @@ const Login = () => {
             // setUsername('');
             // setPassword('');
             // console.log("hereeeeeeeeeeeeeeeeeeeeeeeeeee")
-            Router.push("/user/");
+            Router.push("/order-list/");
             // setSuccess(true);
             // navigate(from, { replace: true });
         } catch (err) {
