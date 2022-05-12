@@ -6,6 +6,13 @@ import Button from '../button/button';
 
 const ProductTable = ({products}) => {
 
+    const mapping = {
+        "In Revision": "bg-Red",
+        "Refund": "bg-Yellow_2",
+        "Awaiting Brief": "bg-LightGreen",
+        "Complete": "bg-LightGreen",
+        
+    }
 
     return (
         <React.Fragment>
@@ -40,8 +47,8 @@ const ProductTable = ({products}) => {
                         <div className='flex items-center justify-between'>
                             <div className='w-28 pr-2'>
                                 <Button
-                                    buttonText={product.overall_status_category === 'progress' ? "In progress" : product.overall_status_category === 'awaiting' ? 'Awaiting Brief' : 'In Revision'}
-                                    backgroundColor={product.overall_status_category === 'revision' ? 'bg-Red' : "bg-LightGreen"}
+                                    buttonText={product.status_category}
+                                    backgroundColor={mapping[product.status_category]}
                                     textColor={"text-white"} borderRadius="rounded-xl"/>
                             </div>
                             <div className='w-24'>
