@@ -29,7 +29,7 @@ const Requirment = ({category}) => {
                 "due_at": "2022-04-29",
                 "requirements": requirements,
                 "details": details,
-                "customer": 3
+                "customer": 1
             }),
             {
                 headers: {
