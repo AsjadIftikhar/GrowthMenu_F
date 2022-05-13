@@ -11,6 +11,8 @@ const ProductTable = ({products}) => {
         "Refund": "bg-Yellow_2",
         "Awaiting Brief": "bg-LightGreen",
         "Complete": "bg-LightGreen",
+        'In Progress': "bg-LightGreen",
+        'Canceled': "bg-Red",
         
     }
 
