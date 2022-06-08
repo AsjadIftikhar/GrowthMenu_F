@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Topbar = () => {
   return (
-    <div className="flex items-center justify-between	 w-full h-15 bg-white p-3 rounded-xl	">
+    <div className="flex items-center justify-betwee w-full h-15 bg-white p-3 rounded-xl">
       <div className="text-green-500 text-sm font-semibold	">
         Bonus Funds in wallet:$50.00
       </div>

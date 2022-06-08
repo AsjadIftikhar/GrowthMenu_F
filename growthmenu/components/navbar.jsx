@@ -29,7 +29,7 @@ function Navbar(props) {
                           <span
                               className="bg-white border border-gray-500 rounded-full
                               text-gray-800 text-sm
-                              md:ml-3 px-4 py-2
+                              md:ml-3 px-4 py-2 md:w-full w-2/3
                               hover:bg-gray-100
                               cursor-pointer">
                             Register

@@ -6,11 +6,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        Grey: "#F8F9FA",
         DarkBlue: "#050F94",
         LightBlue: "#4ABFD4",
-        DarkPurple: "#262A4E",
         LightYellow: "#F7F651",
+        LightGrey: "#F8F9FA",
+
+        DarkPurple: "#262A4E",
         IconGrey: "#A9A9A9",
         white: "#fff",
         black: "#000",
