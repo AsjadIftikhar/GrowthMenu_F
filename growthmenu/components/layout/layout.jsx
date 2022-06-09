@@ -10,7 +10,9 @@ const Layout = ({children}) => {
     if (router.asPath !== '/login' && router.asPath.match('/register') === null) {
         return (
             <div className="h-screen bg-LightGrey p-8 flex">
-                <SideBar/>
+                <div>
+                    <SideBar/>
+                </div>
                 <div className="pl-10 w-full">
                     <TopBar/>
                     {children}
