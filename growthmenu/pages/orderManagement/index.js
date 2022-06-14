@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import DropDown from "../../components/dropdown/dropdown";
+import Dropdown from "../../components/dropdown/dropdown";
 import Table from "../../components/table/table";
 import TextIconCard from "../../components/textIconCard/textIconCard";
 import TextInput from "../../components/textInput/textInput";
@@ -51,11 +51,11 @@ const OrderManagement = () => {
       <TextInput/>
       </span>
                     <span className="w-54 pr-4">
-          <DropDown title="Services"/>
+          <Dropdown title="Services"/>
 
       </span>
                     <span className="w-54 pr-4">
-            <DropDown title="Status"/>
+            <Dropdown title="Status"/>
 
       </span>
                 </div>
