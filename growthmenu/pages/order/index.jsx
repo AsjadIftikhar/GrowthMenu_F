@@ -52,9 +52,6 @@ const NewOrder = () => {
 
 
     const [services, setServices] = useState(SERVICES);
-    // useEffect(() => {
-    //     setServices(SERVICES)
-    // }, [])
 
     const handleAddService = e => {
         e.preventDefault();
