@@ -30,18 +30,20 @@ const BlogPostDetails = () => {
 
   const onSelect = (value, service, index) => {
     const selectedService = [...services];
-    if (service.type === "textField")
+    if (service.type === "textField") {
+      console.log(value)
       selectedService[index].text_field["text"] = value;
+    }
     else {
-      const formData = new FormData();
-      formData.append("upload_image", value);
-      selectedService[index].file_field = value;
+      // formData.append("upload_image", value);
+      selectedService[index].image_field["upload_image"] = value;
     }
     setServices(selectedService);
   };
   const saveOrders = async () => {
     console.log("services", services);
     const pendingService = services.map(async (service) => {
+      console.log(service.image_field);
       if (service.type === "textField")
         return await axiosPrivate.put(
           `/api/service/1/requirement/${service.id}/`,
@@ -52,9 +54,11 @@ const BlogPostDetails = () => {
             },
           }
         );
+      let formData = new FormData();
+      formData.append("upload_image", service.image_field["upload_image"]);
       return await axiosPrivate.put(
         `/api/service/1/requirement/${service.id}/`,
-        service.file_field,
+          formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
