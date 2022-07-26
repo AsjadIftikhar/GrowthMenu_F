@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { axiosPrivate } from "../../api/axios";
 import Button from "../../components/button/button";
@@ -10,6 +10,23 @@ const ProductDescription = () => {
   const [FAQ, setFAQ] = useState({ question: "", answer: "" });
   const [isEdit, setIsEdit] = useState(false);
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function getFAQs() {
+      const faqs_list = await axiosPrivate.get(FAQS_URL, {
+        signal: controller.signal,
+      });
+      const desc = await axiosPrivate.get(DESCRIPTION_URL, {
+        signal: controller.signal,
+      });
+      console.log("desc", desc);
+      setFAQs(faqs_list.data);
+      setDescription(desc.data[0].text);
+    }
+    getFAQs();
+  }, []);
   const saveText = async () => {
     console.log("description", description, FAQs);
     const desc = await axiosPrivate.post(
@@ -21,13 +38,22 @@ const ProductDescription = () => {
         },
       }
     );
-    console.log("desc", desc);
 
     const allFaqs = FAQs.map(async (faq) => {
       const faqObj = {
         question: faq.question,
         answer: faq.answer,
       };
+      if (faq.id)
+        return await await axiosPrivate.put(
+          `/api/service/1/faq/${faq.id}/`,
+          JSON.stringify(faqObj),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       return await await axiosPrivate.post(FAQS_URL, JSON.stringify(faqObj), {
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +152,6 @@ const ProductDescription = () => {
         />
       </div>
       {FAQs.map((faq, index) => {
-        console.log("map faq", faq);
         return (
           <div data-active-classes="bg-blue-100 dark:bg-gray-800 border border-t-0 border-gray-200 dark:border-gray-700 text-blue-600 dark:text-white">
             {/* <h2 id="accordion-color-heading-1"> */}
@@ -134,10 +159,8 @@ const ProductDescription = () => {
               type="button"
               class="flex items-center justify-between w-full p-5 font-medium text-left border border-b-0 border-gray-200   dark:focus:ring-blue-800 dark:border-gray-700 hover:bg-blue-100 dark:hover:bg-gray-800 bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white"
               onClick={() => {
-                console.log("clicker");
                 const faq = FAQs;
                 faq[index].open = !faq[index].open;
-                console.log("faq", faq);
                 setFAQs([...faq]);
               }}
             >
