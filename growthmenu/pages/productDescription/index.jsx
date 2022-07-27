@@ -3,6 +3,8 @@ import { useState } from "react";
 import { axiosPrivate } from "../../api/axios";
 import Button from "../../components/button/button";
 import {useRouter} from "next/router";
+import Image from "next/image";
+
 
 
 const ProductDescription = () => {
@@ -16,6 +18,8 @@ const ProductDescription = () => {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
+
+    if(!router.isReady) return;
     const controller = new AbortController();
 
     async function getFAQs() {
@@ -26,13 +30,13 @@ const ProductDescription = () => {
         signal: controller.signal,
       });
       console.log("desc", desc);
-      if (desc.data == true)
+      if (faqs_list.data == true)
         setFAQs(faqs_list.data);
       if (desc.data == true)
         setDescription(desc.data[0].text);
     }
     getFAQs();
-  }, []);
+  }, [router.isReady]);
   const saveText = async () => {
     console.log("description", description, FAQs);
     const desc = await axiosPrivate.post(
@@ -73,7 +77,20 @@ const ProductDescription = () => {
         }
     )
   };
+  const handleDeleteFAQ = async (_field) => {
 
+    // await delete_service(_service.id)
+
+    await axiosPrivate.delete(`/api/service/${router.query.id}/faq/${_field.id}/`,
+        {
+          headers: {
+            'Authorization': `JWT ${localStorage.getItem("access")}`
+          }
+        });
+
+    const existing_fields = FAQs.filter(s => s.id !== _field.id)
+    setFAQs(existing_fields)
+  };
   const addFAQ = () => {
     setFAQs([...FAQs, { ...FAQ, open: false }]);
     setFAQ({ question: "", answer: "" });
@@ -201,6 +218,20 @@ const ProductDescription = () => {
                 </div>
               </div>
             )}
+
+            <button className="cursor-pointer hover:animate-bounce"
+                    type="button"
+                    onClick={() => {
+                      handleDeleteFAQ(faq)
+                    }}>
+              <Image
+                  src="/images/delete.png"
+                  alt=""
+                  height="20px"
+                  width="20px"
+              />
+            </button>
+
           </div>
         );
       })}

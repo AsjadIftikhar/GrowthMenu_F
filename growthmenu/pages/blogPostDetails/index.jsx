@@ -3,14 +3,14 @@ import { useEffect } from "react";
 import Button from "../../components/button/button";
 import DynamicFields from "../../components/dynamicFields/dynamicFields";
 import { axiosPrivate } from "../api/axios";
-const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
 import {useRouter} from "next/router";
 
 const BlogPostDetails = () => {
+  const router = useRouter();
+  const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
   const [services, setServices] = useState([]);
   const [posts, setPosts] = useState([]);
   const [total, setTotal] = useState(0);
-  const router = useRouter();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();

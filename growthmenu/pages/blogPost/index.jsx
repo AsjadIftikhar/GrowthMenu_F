@@ -30,19 +30,19 @@ const CreateBlog = () => {
     setField(value);
   };
 
-  const handleDeleteRequirement = async (_service) => {
+  const handleDeleteRequirement = async (_field) => {
 
     // await delete_service(_service.id)
 
-    await axiosPrivate.delete(`/api/service/${router.query.id}/requirement/${_service.id}/`,
+    await axiosPrivate.delete(`/api/service/${router.query.id}/requirement/${_field.id}/`,
         {
           headers: {
             'Authorization': `JWT ${localStorage.getItem("access")}`
           }
         });
 
-    const existing_services = selectedFields.filter(s => s.id !== _service.id)
-    setSelectedFields(existing_services)
+    const existing_fields = selectedFields.filter(s => s.id !== _field.id)
+    setSelectedFields(existing_fields)
   };
 
   const addField = (value) => {
