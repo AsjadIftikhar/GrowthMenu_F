@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Link from "next/link";
 import {useRouter} from "next/router";
 import {get_service, get_service_description} from "../services/orderServices"
 
@@ -51,7 +52,6 @@ const ServiceDescription = () => {
                 ))}
 
 
-
                 {/*<p className="text-gray-700">*/}
                 {/*    I will develop a python Django application.<br/>*/}
                 {/*    My services include:<br/>*/}
@@ -68,11 +68,18 @@ const ServiceDescription = () => {
                 {/*    NOTE: Please contact me before placing any order to discuss about your projects.<br/>*/}
                 {/*</p>*/}
             </div>
-            <button type="button"
-                    className="my-8 items-center px-16 py-4 text-sm font-medium text-center text-white
+            <Link href={{
+                pathname: "/blogPostDetails",
+                query: {id: router.query.id}
+            }}>
+            <div className="my-8 w-1/2 items-center px-16 py-4 text-sm font-medium text-center text-white
                     bg-DarkBlue rounded-lg focus:ring-4 focus:ring-blue-200  hover:bg-blue-800">
                 Start Your Order
-            </button>
+            </div>
+
+
+
+            </Link>
         </div>
 
 

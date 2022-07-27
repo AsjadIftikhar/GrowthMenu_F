@@ -1,29 +1,48 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Button from "../../components/button/button";
 import Dropdown from "../../components/dropdown/dropdown";
 import DynamicFields from "../../components/dynamicFields/dynamicFields";
 import { axiosPrivate } from "../api/axios";
+import Image from "next/image";
 
 const INPUT_CHOICES = [
   { value: "textField", label: "textField" },
   // { value: "textArea", label: "textArea" },
   // { value: "dropDown", label: "dropdown" },
   // { value: "numberField", label: "numberField" },
-  { value: "imageField", label: "image" },
-  { value: "fileField", label: "file" },
+  { value: "imageField", label: "imageField" },
+  { value: "fileField", label: "fileField" },
 ];
-const PLACE_ORDER_URL = "/api/service/1/requirement/";
+
 
 const CreateBlog = () => {
+  const router = useRouter();
+
+  const PLACE_ORDER_URL = `/api/service/${router.query.id}/requirement/`;
+
   const [selectedFields, setSelectedFields] = useState([]);
   const [label, setLabel] = useState("");
   const [field, setField] = useState("");
-  const router = useRouter();
 
   const handleDropdown = (value) => {
     console.log("event", value);
     setField(value);
+  };
+
+  const handleDeleteRequirement = async (_service) => {
+
+    // await delete_service(_service.id)
+
+    await axiosPrivate.delete(`/api/service/${router.query.id}/requirement/${_service.id}/`,
+        {
+          headers: {
+            'Authorization': `JWT ${localStorage.getItem("access")}`
+          }
+        });
+
+    const existing_services = selectedFields.filter(s => s.id !== _service.id)
+    setSelectedFields(existing_services)
   };
 
   const addField = (value) => {
@@ -32,6 +51,20 @@ const CreateBlog = () => {
       setLabel("");
     }
   };
+
+  useEffect(() => {
+    if(!router.isReady) return;
+
+    const controller = new AbortController();
+    async function getExistingFields() {
+      const fields_list = await axiosPrivate.get(PLACE_ORDER_URL, {
+        signal: controller.signal,
+      });
+      // console.log("fields_list", fields_list);
+      setSelectedFields(fields_list.data);
+    }
+    getExistingFields();
+  }, [router.isReady]);
 
   const saveFields = async (e) => {
     e.preventDefault();
@@ -45,10 +78,17 @@ const CreateBlog = () => {
         },
       }
     );
-    console.log("responsee", response);
-    router.push("/blogPostDetails/");
+
+    const controller = new AbortController();
+    const fields_list = await axiosPrivate.get(PLACE_ORDER_URL, {
+      signal: controller.signal,
+    });
+    // console.log("fields_list", fields_list);
+    setSelectedFields(fields_list.data);
+    // console.log("responsee", response);
+    // router.push("/blogPostDetails/");
   };
-  console.log("value", selectedFields);
+  // console.log("value", selectedFields);
   return (
     <React.Fragment>
       <div className="flex justify-between items-center pt-3">
@@ -91,7 +131,21 @@ const CreateBlog = () => {
       </div>
       <div className="flex flex-wrap ">
         {selectedFields.map((field, index) => (
-          <DynamicFields key={field + index} field={field} />
+            <div>
+            <DynamicFields key={field + index} field={field} />
+              <button className="cursor-pointer hover:animate-bounce"
+                      type="button"
+                      onClick={() => {
+                        handleDeleteRequirement(field)
+                      }}>
+                <Image
+                    src="/images/delete.png"
+                    alt=""
+                    height="20px"
+                    width="20px"
+                />
+              </button>
+            </div>
         ))}
       </div>
       {selectedFields.length > 0 && (

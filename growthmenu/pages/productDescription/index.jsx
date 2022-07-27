@@ -2,10 +2,14 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { axiosPrivate } from "../../api/axios";
 import Button from "../../components/button/button";
-const DESCRIPTION_URL = "/api/service/1/description/";
-const FAQS_URL = "/api/service/1/faq/";
+import {useRouter} from "next/router";
+
 
 const ProductDescription = () => {
+  const router = useRouter();
+  const DESCRIPTION_URL = `/api/service/${router.query.id}/description/`;
+  const FAQS_URL = `/api/service/${router.query.id}/faq/`;
+
   const [FAQs, setFAQs] = useState([]);
   const [FAQ, setFAQ] = useState({ question: "", answer: "" });
   const [isEdit, setIsEdit] = useState(false);
@@ -22,8 +26,10 @@ const ProductDescription = () => {
         signal: controller.signal,
       });
       console.log("desc", desc);
-      setFAQs(faqs_list.data);
-      setDescription(desc.data[0].text);
+      if (desc.data == true)
+        setFAQs(faqs_list.data);
+      if (desc.data == true)
+        setDescription(desc.data[0].text);
     }
     getFAQs();
   }, []);
@@ -61,6 +67,11 @@ const ProductDescription = () => {
       });
     });
     await Promise.all(allFaqs);
+    router.push({
+          pathname: '/blogPost',
+          query: { id: router.query.id}
+        }
+    )
   };
 
   const addFAQ = () => {

@@ -76,14 +76,24 @@ const NewOrder = () => {
         e.preventDefault();
 
         const response = await create_services(new_service)
-        new_service.id = services.length + 1
+        console.log(response)
+
+        // new_service.id = services.length + 1
+
+        new_service.id = response.data.id
 
         const existing_services = services
         existing_services.push(new_service)
 
         setServices(existing_services)
         setAdd_visibility("hidden")
-
+        // router.push("/productDescription")
+        console.log(existing_services)
+        router.push({
+            pathname: '/productDescription',
+                query: { id: new_service.id}
+            }
+            )
 
     };
 
@@ -103,6 +113,7 @@ const NewOrder = () => {
         // Save
         setServices(existing_services)
         setEdit_visibility("hidden")
+        router.push("/productDescription")
     };
 
     const handleDeleteService = async (_service) => {

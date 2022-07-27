@@ -3,12 +3,14 @@ import { useEffect } from "react";
 import Button from "../../components/button/button";
 import DynamicFields from "../../components/dynamicFields/dynamicFields";
 import { axiosPrivate } from "../api/axios";
-const GET_SERVICE_REQUESTS = "/api/service/1/requirement/";
+const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
+import {useRouter} from "next/router";
 
 const BlogPostDetails = () => {
   const [services, setServices] = useState([]);
   const [posts, setPosts] = useState([]);
   const [total, setTotal] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
@@ -31,12 +33,14 @@ const BlogPostDetails = () => {
   const onSelect = (value, service, index) => {
     const selectedService = [...services];
     if (service.type === "textField") {
-      console.log(value)
       selectedService[index].text_field["text"] = value;
     }
-    else {
+    else if (service.type === "imageField"){
       // formData.append("upload_image", value);
       selectedService[index].image_field["upload_image"] = value;
+    }
+    else{
+      selectedService[index].file_field["upload_file"] = value;
     }
     setServices(selectedService);
   };
@@ -46,7 +50,7 @@ const BlogPostDetails = () => {
       console.log(service.image_field);
       if (service.type === "textField")
         return await axiosPrivate.put(
-          `/api/service/1/requirement/${service.id}/`,
+          `/api/service/${router.query.id}/requirement/${service.id}/`,
           JSON.stringify({ text: service.text_field.text }),
           {
             headers: {
@@ -54,16 +58,30 @@ const BlogPostDetails = () => {
             },
           }
         );
+
+      else if (service.type === "imageField") {
+        let formData = new FormData();
+        formData.append("upload_image", service.image_field["upload_image"]);
+        return await axiosPrivate.put(
+            `/api/service/${router.query.id}/requirement/${service.id}/`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+        );
+      }
       let formData = new FormData();
-      formData.append("upload_image", service.image_field["upload_image"]);
+      formData.append("upload_file", service.file_field["upload_file"]);
       return await axiosPrivate.put(
-        `/api/service/1/requirement/${service.id}/`,
+          `/api/service/${router.query.id}/requirement/${service.id}/`,
           formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
       );
     });
     await Promise.all(pendingService);
