@@ -7,7 +7,7 @@ import axiosPrivate from "../../pages/api/axios";
 import { useRouter } from "next/router";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const PLACE_ORDER_URL = '/api/orders/order_list/';
+const PLACE_ORDER_URL = '/api/orders/';
 const Requirment = ({category}) => {
 
     const [due_at, setDue_at] = useState();

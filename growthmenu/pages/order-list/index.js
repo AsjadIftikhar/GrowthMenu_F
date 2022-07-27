@@ -7,7 +7,7 @@ import ProductDescriptiontable from '../../components/productTable/productTable'
 import axios from "../api/axios";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const ORDER_LIST_URL = '/api/orders/order_list/';
+const ORDER_LIST_URL = '/api/orders/';
 
 const OrderDetail = () => {
 

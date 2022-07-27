@@ -10,8 +10,8 @@ const ProductTable = ({products}) => {
         "In Revision": "bg-Red",
         "Refund": "bg-Yellow_2",
         "Awaiting Brief": "bg-LightGreen",
-        "Complete": "bg-LightGreen",
-        'In Progress': "bg-LightGreen",
+        "Complete": "bg-Yellow_2",
+        'In Progress': "bg-Green",
         'Canceled': "bg-Red",
         
     }
@@ -39,9 +39,9 @@ const ProductTable = ({products}) => {
 
                             </div>
                             <div className='flex flex-col justify-between '>
-                                <div className='text-lg font-semibold'>{product.details}</div>
-                                <div className='text-xs font-extralight text-Grey_2'>{product.id}</div>
-                                <div className='text-sm text_Grey_3'>{product.requirements} </div>
+                                <div className='text-lg font-semibold'>{product.service.title}</div>
+                                <div className='text-xs font-extralight text-Grey_2'>{product.service.id}</div>
+                                <div className='text-sm text_Grey_3'>{product.service.service_description.text} </div>
                                 <div className='text-base font-normal'>Delivery Date: <span
                                     className='text-Grey_1'>{product.due_at}</span></div>
                             </div>
