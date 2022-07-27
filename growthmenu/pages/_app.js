@@ -1,15 +1,7 @@
-import "../styles/globals.css";
-import { AuthProvider } from "../context/AuthProvider";
-import Layout from "../components/layout/layout";
+import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <AuthProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </AuthProvider>
-  );
+  return <Component {...pageProps} />
 }
 
-export default MyApp;
+export default MyApp
