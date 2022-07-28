@@ -26,9 +26,15 @@ const ProductDescription = () => {
         async function getFAQs() {
             const faqs_list = await axiosPrivate.get(FAQS_URL, {
                 signal: controller.signal,
+                headers: {
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
+                }
             });
             const desc = await axiosPrivate.get(DESCRIPTION_URL, {
                 signal: controller.signal,
+                headers: {
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
+                }
             });
             console.log("desc", desc);
             if (faqs_list.data == true)
@@ -47,6 +53,7 @@ const ProductDescription = () => {
             {
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
                 },
             }
         );
@@ -57,23 +64,25 @@ const ProductDescription = () => {
                 answer: faq.answer,
             };
             if (faq.id)
-                return await await axiosPrivate.put(
+                return await axiosPrivate.put(
                     `/api/service/1/faq/${faq.id}/`,
                     JSON.stringify(faqObj),
                     {
                         headers: {
                             "Content-Type": "application/json",
+                            'Authorization': `JWT ${localStorage.getItem("access")}`
                         },
                     }
                 );
-            return await await axiosPrivate.post(FAQS_URL, JSON.stringify(faqObj), {
+            return await axiosPrivate.post(FAQS_URL, JSON.stringify(faqObj), {
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
                 },
             });
         });
         await Promise.all(allFaqs);
-        router.push({
+        await router.push({
                 pathname: '/blogPost',
                 query: {id: router.query.id}
             }
@@ -112,7 +121,7 @@ const ProductDescription = () => {
                         className="w-full h-2/5"
                         src="https://www.youtube-nocookie.com/embed/FMrtSHAAPhM"
                         frameBorder="0"
-                    ></iframe>
+                    />
                     <div className="grid grid-cols-3 gap-2 flex items-center mt-2">
                         <div className="mb-2">
                             <img
@@ -211,10 +220,10 @@ const ProductDescription = () => {
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path
-                                            fill-rule="evenodd"
+                                            fillRule="evenodd"
                                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"
-                                        ></path>
+                                            clipRule="evenodd"
+                                        />
                                     </svg>
                                 </button>
                                 {/* </h2> */}

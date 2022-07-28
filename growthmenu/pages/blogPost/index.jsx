@@ -62,6 +62,9 @@ const CreateBlog = () => {
         async function getExistingFields() {
             const fields_list = await axiosPrivate.get(PLACE_ORDER_URL, {
                 signal: controller.signal,
+                headers: {
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
+                }
             });
             // console.log("fields_list", fields_list);
             setSelectedFields(fields_list.data);
@@ -79,6 +82,7 @@ const CreateBlog = () => {
             {
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
                 },
             }
         );
@@ -86,6 +90,9 @@ const CreateBlog = () => {
         const controller = new AbortController();
         const fields_list = await axiosPrivate.get(PLACE_ORDER_URL, {
             signal: controller.signal,
+            headers: {
+                'Authorization': `JWT ${localStorage.getItem("access")}`
+            }
         });
         // console.log("fields_list", fields_list);
         setSelectedFields(fields_list.data);

@@ -8,30 +8,37 @@ import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar"
 
 const BlogPostDetails = () => {
-  const router = useRouter();
-  const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
-  const [services, setServices] = useState([]);
-  const [posts, setPosts] = useState([]);
-  const [total, setTotal] = useState(0);
-  useEffect(() => {
-    if(!router.isReady) return;
-    let isMounted = true;
-    const controller = new AbortController();
-    async function getOrders() {
-      const services = await axiosPrivate.get(GET_SERVICE_REQUESTS, {
-        signal: controller.signal,
-      });
-      console.log(services);
-      setServices(services.data);
-      // isMounted && setOrders(order_list.data);
-    }
+    const router = useRouter();
 
-    getOrders();
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, [router.isReady]);
+    const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
+    const [services, setServices] = useState([]);
+    const [posts, setPosts] = useState([]);
+    const [total, setTotal] = useState(0);
+
+    useEffect(() => {
+        if (!router.isReady) return;
+        let isMounted = true;
+        const controller = new AbortController();
+
+        async function getOrders() {
+            const services = await axiosPrivate.get(GET_SERVICE_REQUESTS, {
+                signal: controller.signal,
+                headers: {
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
+                }
+            });
+            console.log(services);
+            setServices(services.data);
+            // isMounted && setOrders(order_list.data);
+        }
+
+        getOrders();
+
+        return () => {
+            isMounted = false;
+            controller.abort();
+        };
+    }, [router.isReady]);
 
     const onSelect = (value, service, index) => {
         const selectedService = [...services];
@@ -56,6 +63,7 @@ const BlogPostDetails = () => {
                     {
                         headers: {
                             "Content-Type": "application/json",
+                            'Authorization': `JWT ${localStorage.getItem("access")}`
                         },
                     }
                 );
@@ -69,6 +77,7 @@ const BlogPostDetails = () => {
                     {
                         headers: {
                             "Content-Type": "multipart/form-data",
+                            'Authorization': `JWT ${localStorage.getItem("access")}`
                         },
                     }
                 );
@@ -81,6 +90,7 @@ const BlogPostDetails = () => {
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
+                        'Authorization': `JWT ${localStorage.getItem("access")}`
                     },
                 }
             );
