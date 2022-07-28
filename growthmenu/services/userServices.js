@@ -5,6 +5,7 @@ const REGISTER_API_URL = "/auth/users/"
 const LOGIN_API_URL = "/auth/jwt/create/"
 const PROFILE_UPDATE_URL = '/auth/customers/';
 const ME_URL = '/auth/users/me/'
+const CUSTOMER_ME_URL = '/auth/customers/me/'
 
 export function register(user) {
     return http.post(REGISTER_API_URL, {
@@ -68,6 +69,15 @@ export function get_current_user() {
 
 export function get_me() {
     return http.get(ME_URL,
+        {
+            headers: {
+                'Authorization': `JWT ${localStorage.getItem("access")}`
+            }
+        })
+}
+
+export function get_customer_me() {
+    return http.get(CUSTOMER_ME_URL,
         {
             headers: {
                 'Authorization': `JWT ${localStorage.getItem("access")}`
