@@ -7,6 +7,7 @@ import {axiosPrivate} from "../api/axios";
 import Image from "next/image";
 import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar"
+import {get_service} from "../../services/orderServices";
 
 const INPUT_CHOICES = [
     {value: "textField", label: "textField"},
@@ -26,6 +27,7 @@ const CreateBlog = () => {
     const [selectedFields, setSelectedFields] = useState([]);
     const [label, setLabel] = useState("");
     const [field, setField] = useState("");
+    const [service, setService] = useState([]);
 
     const handleDropdown = (value) => {
         console.log("event", value);
@@ -59,6 +61,12 @@ const CreateBlog = () => {
 
         const controller = new AbortController();
 
+        const fetchService = async () => {
+
+            const response = await get_service(router.query.id)
+            setService(response.data);
+        };
+
         async function getExistingFields() {
             const fields_list = await axiosPrivate.get(PLACE_ORDER_URL, {
                 signal: controller.signal,
@@ -71,6 +79,7 @@ const CreateBlog = () => {
         }
 
         getExistingFields();
+        fetchService();
     }, [router.isReady]);
 
     const saveFields = async (e) => {
@@ -111,7 +120,7 @@ const CreateBlog = () => {
                     <TopBar/>
 
                     <div className="flex justify-between items-center pt-3">
-                        <div className="text-2xl font-semibold">Create a Blog Post</div>
+                        <div className="text-2xl font-semibold">Create a {service.title} requirement form</div>
                         <div className=" flex ">
                             <div className="w-36 mr-2">
                                 <input

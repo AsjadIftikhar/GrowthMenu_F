@@ -6,12 +6,14 @@ import {axiosPrivate} from "../api/axios";
 import {useRouter} from "next/router";
 import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar"
+import {get_service} from "../../services/orderServices";
 
 const BlogPostDetails = () => {
     const router = useRouter();
 
     const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
     const [services, setServices] = useState([]);
+    const [service, setService] = useState([]);
     const [posts, setPosts] = useState([]);
     const [total, setTotal] = useState(0);
 
@@ -19,6 +21,12 @@ const BlogPostDetails = () => {
         if (!router.isReady) return;
         let isMounted = true;
         const controller = new AbortController();
+
+        const fetchService = async () => {
+
+            const response = await get_service(router.query.id)
+            setService(response.data);
+        };
 
         async function getOrders() {
             const services = await axiosPrivate.get(GET_SERVICE_REQUESTS, {
@@ -33,6 +41,7 @@ const BlogPostDetails = () => {
         }
 
         getOrders();
+        fetchService();
 
         return () => {
             isMounted = false;
@@ -111,15 +120,16 @@ const BlogPostDetails = () => {
                         <div></div>
                         <label
                             htmlFor="last_name"
-                            className="block mb-2  text-sm font-medium text-gray-900"
+                            className="block mb-2  text-lg font-medium text-gray-900"
                         >
-                            How many blog posts you would like?
+                            How many {service.title} would you like?
                         </label>
+                        <div></div>
                         <div className="flex items-center">
                             <input
                                 type="number"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                       focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                className="bg-gray-50 border p-3 m-5 border-gray-300 text-gray-900 text-sm rounded-lg
+                                       focus:ring-blue-500 focus:border-blue-500 block "
                                 onChange={(e) => setTotal(e.target.value)}
                                 value={total}
                             />
@@ -140,7 +150,7 @@ const BlogPostDetails = () => {
                         </div>
                         {console.log("posts", posts)}
                         {posts.map((p, index) => (
-                            <div>
+                            <div className="p-3">
                                 <label
                                     htmlFor="last_name"
                                     className="block mb-2  text-sm font-medium text-gray-900"

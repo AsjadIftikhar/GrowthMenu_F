@@ -6,6 +6,7 @@ import {useRouter} from "next/router";
 import Image from "next/image";
 import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar"
+import {get_service} from "../../services/orderServices";
 
 
 const ProductDescription = () => {
@@ -17,11 +18,18 @@ const ProductDescription = () => {
     const [FAQ, setFAQ] = useState({question: "", answer: ""});
     const [isEdit, setIsEdit] = useState(false);
     const [description, setDescription] = useState("");
+    const [service, setService] = useState([]);
 
     useEffect(() => {
 
         if (!router.isReady) return;
         const controller = new AbortController();
+
+        const fetchService = async () => {
+
+            const response = await get_service(router.query.id)
+            setService(response.data);
+        };
 
         async function getFAQs() {
             const faqs_list = await axiosPrivate.get(FAQS_URL, {
@@ -36,14 +44,19 @@ const ProductDescription = () => {
                     'Authorization': `JWT ${localStorage.getItem("access")}`
                 }
             });
-            console.log("desc", desc);
-            if (faqs_list.data == true)
+            // console.log("desc", desc);
+            console.log("description", desc);
+            console.log("faq", faqs_list);
+            if (faqs_list.data.length > 0)
                 setFAQs(faqs_list.data);
-            if (desc.data == true)
+            if (desc.data.length > 0)
                 setDescription(desc.data[0].text);
+            // console.log("description", description, FAQs);
+
         }
 
         getFAQs();
+        fetchService();
     }, [router.isReady]);
     const saveText = async () => {
         console.log("description", description, FAQs);
@@ -65,7 +78,7 @@ const ProductDescription = () => {
             };
             if (faq.id)
                 return await axiosPrivate.put(
-                    `/api/service/1/faq/${faq.id}/`,
+                    `/api/service/${router.query.id}/faq/${faq.id}/`,
                     JSON.stringify(faqObj),
                     {
                         headers: {
@@ -116,14 +129,14 @@ const ProductDescription = () => {
                 <div className="pl-10 w-full">
                     <TopBar/>
 
-                    <div className="text-2xl font-semibold pt-3 ">Product Description</div>
+                    <div className="text-4xl font-semibold pt-5 ">{service.title}</div>
                     <iframe
-                        className="w-full h-2/5"
+                        className="w-full p-5 h-2/5"
                         src="https://www.youtube-nocookie.com/embed/FMrtSHAAPhM"
                         frameBorder="0"
                     />
-                    <div className="grid grid-cols-3 gap-2 flex items-center mt-2">
-                        <div className="mb-2">
+                    <div className="grid grid-cols-3 gap-2 flex items-center p-5 mt-2">
+                        <div className="mb-2 p-3">
                             <img
                                 src="https://mdbootstrap.com/img/new/standard/city/047.jpg"
                                 className="max-w-full h-auto rounded-lg"
@@ -131,7 +144,7 @@ const ProductDescription = () => {
                             />
                         </div>
 
-                        <div className="mb-2">
+                        <div className="mb-2 p-3">
                             <img
                                 src="https://mdbootstrap.com/img/new/standard/city/047.jpg"
                                 className="max-w-full h-auto rounded-lg"
@@ -139,7 +152,7 @@ const ProductDescription = () => {
                             />
                         </div>
 
-                        <div className="mb-2">
+                        <div className="mb-2 p-3">
                             <img
                                 src="https://mdbootstrap.com/img/new/standard/city/047.jpg"
                                 className="max-w-full h-auto rounded-lg"
@@ -150,7 +163,7 @@ const ProductDescription = () => {
                     <div className="mb-6 w-full">
                         <label
                             htmlFor="first_name"
-                            className="block mb-2 text-sm font-medium text-gray-900"
+                            className="block mb-2 text-lg font-medium text-gray-900"
                         >
                             Add Description
                         </label>
@@ -167,7 +180,7 @@ const ProductDescription = () => {
                     <div className="mb-6 w-full">
                         <label
                             htmlFor="first_name"
-                            className="block mb-2 text-sm font-medium text-gray-900"
+                            className="block mb-2 text-lg font-medium text-gray-900"
                         >
                             Add FAQ
                         </label>
