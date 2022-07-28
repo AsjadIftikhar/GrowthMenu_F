@@ -8,30 +8,30 @@ import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar"
 
 const BlogPostDetails = () => {
-    const router = useRouter();
-    const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
-    const [services, setServices] = useState([]);
-    const [posts, setPosts] = useState([]);
-    const [total, setTotal] = useState(0);
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
+  const router = useRouter();
+  const GET_SERVICE_REQUESTS = `/api/service/${router.query.id}/requirement/`;
+  const [services, setServices] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    if(!router.isReady) return;
+    let isMounted = true;
+    const controller = new AbortController();
+    async function getOrders() {
+      const services = await axiosPrivate.get(GET_SERVICE_REQUESTS, {
+        signal: controller.signal,
+      });
+      console.log(services);
+      setServices(services.data);
+      // isMounted && setOrders(order_list.data);
+    }
 
-        async function getOrders() {
-            const services = await axiosPrivate.get(GET_SERVICE_REQUESTS, {
-                signal: controller.signal,
-            });
-            console.log(services);
-            setServices(services.data);
-            // isMounted && setOrders(order_list.data);
-        }
-
-        getOrders();
-        return () => {
-            isMounted = false;
-            controller.abort();
-        };
-    }, []);
+    getOrders();
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [router.isReady]);
 
     const onSelect = (value, service, index) => {
         const selectedService = [...services];

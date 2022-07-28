@@ -26,7 +26,7 @@ const Premium = () => {
     // }, [category])
 
     useEffect(() => {
-
+        if(!router.isReady) return;
         const fetchData = async () => {
             setIsLoading(true);
 
@@ -36,7 +36,7 @@ const Premium = () => {
         };
 
         fetchData();
-    }, []);
+    }, [router.isReady]);
 
     if (isLoading === true) return (
         <div className="text-center py-8">
