@@ -50,7 +50,7 @@ function Profile_Component(props) {
           first_name,
           last_name,
           brand_name,
-          business_category,
+          business_category: business_category.value,
           phone,
           website_url,
           address,
@@ -58,12 +58,13 @@ function Profile_Component(props) {
         {
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `JWT ${localStorage.getItem("access")}`
           },
         }
       );
       setSuccess(true);
 
-      await router.push("/login");
+      router.push("/order");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
