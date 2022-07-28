@@ -1,5 +1,3 @@
-import React from "react";
-
 import Profile_Component from "../../components/profile";
 import Footer from "../../components/footer";
 
