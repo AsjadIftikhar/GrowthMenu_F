@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import axios from "../api/axios";
 
 import Dropdown from "./dropdown/dropdown";
-import {get_customer_me} from "../services/userServices";
+import {get_me, get_customer_me} from "../services/userServices";
 
 const PROFILE_URL = "/auth/customers/me/";
 
@@ -43,6 +43,7 @@ function Edit_Profile_Component(props) {
             setIsLoading(true);
 
             const response = await get_customer_me()
+            const user = await get_me()
 
             setFirstName(response.data.first_name)
             setLastName(response.data.last_name)
@@ -52,6 +53,8 @@ function Edit_Profile_Component(props) {
             setWebsiteUrl(response.data.website_url)
             setAddress(response.data.address)
             setId(response.data.user)
+
+            setEmail(user.data.email)
 
             setIsLoading(false);
         };
@@ -88,7 +91,7 @@ function Edit_Profile_Component(props) {
             );
             setSuccess(true);
 
-            router.push("/login");
+            router.push("/order");
         } catch (err) {
             if (!err?.response) {
                 setErrMsg("No Server Response");
@@ -318,7 +321,7 @@ function Edit_Profile_Component(props) {
                                        focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     onChange={(e) => setPassword(e.target.value)}
                                     value={password}
-                                    required
+                                    disabled={true}
                                 />
                             </div>
                         </div>
