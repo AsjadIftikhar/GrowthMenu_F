@@ -107,6 +107,7 @@ const CreateBlog = () => {
         setSelectedFields(fields_list.data);
         // console.log("responsee", response);
         // router.push("/blogPostDetails/");
+        router.push('/order')
     };
     // console.log("value", selectedFields);
     return (

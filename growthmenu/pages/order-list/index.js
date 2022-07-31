@@ -27,9 +27,9 @@ const OrderDetail = () => {
                     'Authorization': `JWT ${localStorage.getItem("access")}`
                 }
             });
-            console.log("=========",order_list.data)
-            // setOrders(order_list.data)
-            isMounted && setOrders(order_list.data);
+            if(order_list.data.length !== 0)
+                setOrders(order_list.data)
+            // isMounted && setOrders(order_list.data);
         }
 
         getOrders();

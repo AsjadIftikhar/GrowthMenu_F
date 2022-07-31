@@ -77,7 +77,7 @@ function Edit_Profile_Component(props) {
                     first_name,
                     last_name,
                     brand_name,
-                    business_category,
+                    business_category: business_category.value,
                     phone,
                     website_url,
                     address,
