@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import axios from "../api/axios";
 
 import Dropdown from "./dropdown/dropdown";
-import {get_me, get_customer_me} from "../services/userServices";
+import {get_me, get_customer_me, create_profile, edit_profile} from "../services/userServices";
 
-const PROFILE_URL = "/auth/customers/me/";
-
-function Edit_Profile_Component(props) {
+const Edit_Profile_Component = () => {
     const router = useRouter();
 
     //Select Dropdown Fields
-
     const CATEGORY_CHOICES = [
         {value: "Agency", label: "Agency"},
         {value: "Ecommerce Business", label: "Ecommerce Business"},
@@ -35,7 +31,7 @@ function Edit_Profile_Component(props) {
     const [address, setAddress] = useState("");
 
     const [isLoading, setIsLoading] = useState(false);
-    const [errMsg, setErrMsg] = useState("");
+    const [errors, setErrors] = useState([]);
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
@@ -70,35 +66,17 @@ function Edit_Profile_Component(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(
-                PROFILE_URL,
-                JSON.stringify({
-                    user: id,
-                    first_name,
-                    last_name,
-                    brand_name,
-                    business_category: business_category.value,
-                    phone,
-                    website_url,
-                    address,
-                }),
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Authorization': `JWT ${localStorage.getItem("access")}`
-                    },
-                }
-            );
+            await edit_profile({id, first_name, last_name, brand_name, business_category, phone, website_url, address})
             setSuccess(true);
 
-            router.push("/order");
-        } catch (err) {
-            if (!err?.response) {
-                setErrMsg("No Server Response");
-            } else if (err.response?.status === 409) {
-                setErrMsg("Username Taken");
-            } else {
-                setErrMsg("Registration Failed");
+            router.push('/');
+
+        } catch (ex) {
+            if (ex.response && (ex.response.status === 400 || ex.response.status === 401)) {
+                const err = [...errors]
+                err.push(ex.response.data.detail)
+                console.log(err)
+                setErrors(err)
             }
         }
     };
@@ -217,6 +195,26 @@ function Edit_Profile_Component(props) {
                     <h3 className="text-xl font-semibold py-6">Account</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-2 gap-16">
+
+                            {/*Errors*/}
+                            {errors.map((err, index) => (
+                                <div className="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg"
+                                     role="alert"
+                                     key={index}>
+                                    <svg className="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor"
+                                         viewBox="0 0 20 20"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path fillRule="evenodd"
+                                              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                              clipRule="evenodd"/>
+                                    </svg>
+                                    <div>
+                                        <span className="font-medium">Error!</span> {err}
+                                    </div>
+                                </div>
+                            ))}
+                            {/*End Errors*/}
+
                             <div className="mb-6 w-full">
                                 <label
                                     htmlFor="first_name"
@@ -309,25 +307,6 @@ function Edit_Profile_Component(props) {
                             </div>
                             <div className="mb-6 w-full">
                                 <label
-                                    htmlFor="password"
-                                    className="block mb-2 text-sm font-medium text-gray-900"
-                                >
-                                    Password
-                                </label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                       focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    value={password}
-                                    disabled={true}
-                                />
-                            </div>
-                        </div>
-                        <div className="grid xl:grid-cols-2 xl:gap-16">
-                            <div className="mb-6 w-full">
-                                <label
                                     htmlFor="phone_number"
                                     className="block mb-2 text-sm font-medium text-gray-900"
                                 >
@@ -343,6 +322,8 @@ function Edit_Profile_Component(props) {
                                     required
                                 />
                             </div>
+                        </div>
+                        <div className="grid xl:grid-cols-2 xl:gap-16">
                             <div className="relative z-0 mb-6 w-full group">
                                 <label
                                     htmlFor="website"

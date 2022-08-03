@@ -28,9 +28,30 @@ export async function login(user) {
     }
 }
 
-export function update(profile) {
+export function create_profile(profile) {
     const {id, first_name, last_name, brand_name, business_category, phone, website_url, address} = profile
     return http.post(PROFILE_UPDATE_URL,
+        {
+            user: id,
+            first_name,
+            last_name,
+            brand_name,
+            business_category: business_category.value,
+            phone,
+            website_url,
+            address
+        },
+        {
+            headers: {
+                'Authorization': `JWT ${localStorage.getItem("access")}`
+            }
+        }
+    )
+}
+
+export function edit_profile(profile) {
+    const {id, first_name, last_name, brand_name, business_category, phone, website_url, address} = profile
+    return http.put(CUSTOMER_ME_URL,
         {
             user: id,
             first_name,

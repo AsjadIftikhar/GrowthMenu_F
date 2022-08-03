@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 
 import Dropdown from "./dropdown/dropdown";
 
-import {update, get_me} from "../services/userServices"
+import {create_profile, get_me} from "../services/userServices"
 
 const Profile_Component = () => {
 
@@ -22,7 +22,6 @@ const Profile_Component = () => {
     const [id, setId] = useState(router.query.id);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     // Profile Fields
     const [first_name, setFirstName] = useState('');
@@ -56,9 +55,6 @@ const Profile_Component = () => {
     }, [])
 
 
-    useEffect(() => {
-        setId(router.query.id)
-    }, [])
     const handleDropdown = (value) => {
         setBusinessCategory({value});
     };
@@ -67,7 +63,7 @@ const Profile_Component = () => {
 
         e.preventDefault();
         try {
-            await update({id, first_name, last_name, brand_name, business_category, phone, website_url, address})
+            await create_profile({id, first_name, last_name, brand_name, business_category, phone, website_url, address})
             setSuccess(true);
 
             router.push('/');
@@ -234,17 +230,29 @@ const Profile_Component = () => {
                                        value={email}
                                        required/>
                             </div>
+                            {/*<div className="mb-6 w-full">*/}
+                            {/*    <label htmlFor="password"*/}
+                            {/*           className="block mb-2 text-sm font-medium text-gray-900">Password*/}
+                            {/*    </label>*/}
+                            {/*    <input type="password"*/}
+                            {/*           id="password"*/}
+                            {/*           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg*/}
+                            {/*           focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"*/}
+                            {/*           onChange={(e) => setPassword(e.target.value)}*/}
+                            {/*           value={password}*/}
+                            {/*           disabled={true}/>*/}
+                            {/*</div>*/}
                             <div className="mb-6 w-full">
-                                <label htmlFor="password"
-                                       className="block mb-2 text-sm font-medium text-gray-900">Password
+                                <label htmlFor="phone_number"
+                                       className="block mb-2 text-sm font-medium text-gray-900">Phone Number
                                 </label>
-                                <input type="password"
-                                       id="password"
+                                <input type="tel"
+                                       id="phone_number"
                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
                                        focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       onChange={(e) => setPassword(e.target.value)}
-                                       value={password}
-                                       disabled={true}/>
+                                       onChange={(e) => setPhone(e.target.value)}
+                                       value={phone}
+                                       required/>
                             </div>
                         </div>
                         <div className="grid xl:grid-cols-2 xl:gap-16">
