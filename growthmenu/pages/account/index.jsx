@@ -1,5 +1,5 @@
 import React from 'react';
-import Edit_Profile_Component from "../../components/edit_profile";
+import Edit_Profile_Component from "../../components/Profile/edit_profile";
 import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar";
 

@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react';
 import {useRouter} from "next/router";
 
-import Dropdown from "./dropdown/dropdown";
+import Dropdown from "../dropdown/dropdown";
 
-import {create_profile, get_me} from "../services/userServices"
+import {create_profile, get_me} from "../../services/userServices"
 
 const Profile_Component = () => {
 
@@ -63,7 +63,16 @@ const Profile_Component = () => {
 
         e.preventDefault();
         try {
-            await create_profile({id, first_name, last_name, brand_name, business_category, phone, website_url, address})
+            await create_profile({
+                id,
+                first_name,
+                last_name,
+                brand_name,
+                business_category,
+                phone,
+                website_url,
+                address
+            })
             setSuccess(true);
 
             router.push('/');
@@ -256,18 +265,6 @@ const Profile_Component = () => {
                             </div>
                         </div>
                         <div className="grid xl:grid-cols-2 xl:gap-16">
-                            <div className="mb-6 w-full">
-                                <label htmlFor="phone_number"
-                                       className="block mb-2 text-sm font-medium text-gray-900">Phone Number
-                                </label>
-                                <input type="tel"
-                                       id="phone_number"
-                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                       focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                       onChange={(e) => setPhone(e.target.value)}
-                                       value={phone}
-                                       required/>
-                            </div>
                             <div className="relative z-0 mb-6 w-full group">
                                 <label htmlFor="website"
                                        className="block mb-2 text-sm font-medium text-gray-900">Website
@@ -281,9 +278,6 @@ const Profile_Component = () => {
                                        value={website_url}
                                        required/>
                             </div>
-
-                        </div>
-                        <div className="grid xl:grid-cols-2 xl:gap-16">
                             <div className="mb-6 w-full">
                                 <label htmlFor="address"
                                        className="block mb-2 text-sm font-medium text-gray-900">Address
@@ -295,8 +289,8 @@ const Profile_Component = () => {
                                           value={address}
                                           required/>
                             </div>
-                        </div>
 
+                        </div>
                         <div className="grid xl:grid-cols-2 xl:gap-16">
                             <div className="relative z-0 mt-6 mb-6 w-full group">
                                 <a href="#" className="text-blue-800 text-xl text-center w-full hover:underline">

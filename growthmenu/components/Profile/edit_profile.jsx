@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
-import Dropdown from "./dropdown/dropdown";
-import {get_me, get_customer_me, create_profile, edit_profile} from "../services/userServices";
+import Dropdown from "../dropdown/dropdown";
+import {get_me, get_customer_me, create_profile, edit_profile} from "../../services/userServices";
 
 const Edit_Profile_Component = () => {
     const router = useRouter();
@@ -341,8 +341,6 @@ const Edit_Profile_Component = () => {
                                     required
                                 />
                             </div>
-                        </div>
-                        <div className="grid xl:grid-cols-2 xl:gap-16">
                             <div className="mb-6 w-full">
                                 <label
                                     htmlFor="address"
