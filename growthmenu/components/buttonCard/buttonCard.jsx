@@ -4,16 +4,11 @@ import Link from "next/link";
 
 
 
-const ButtonCard = ({icon, id, title, backgroundColor, onClick}) => {
-
-        const handleClick = (e) => {
-            const url = "/order/" + title.replace(" ", "-")
-            onClick(url)
-        }
+const ButtonCard = ({icon, id, title, backgroundColor}) => {
         return (
             // eslint-disable-next-line @next/next/link-passhref
             <Link  href={{
-                pathname: "/order/services",
+                pathname: "/order/service",
                 query: { id: id}
             }}>
                 <div

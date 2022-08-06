@@ -7,15 +7,14 @@ const SERVICES_URL = "/api/service/"
 
 
 export function get_services() {
-    const response = http.get(SERVICES_URL,
+    return http.get(SERVICES_URL,
         {
             headers: {
                 'Authorization': `JWT ${localStorage.getItem("access")}`
             }
         })
-    console.log(response.data)
-    return response
 }
+
 export function get_service(id) {
     return http.get(`${SERVICES_URL}${id}/`,
         {
@@ -24,6 +23,7 @@ export function get_service(id) {
             }
         })
 }
+
 export function get_service_description(id) {
     return http.get(`${SERVICES_URL}${id}/description`,
         {
@@ -41,6 +41,7 @@ export function get_service_faqs(id) {
             }
         })
 }
+
 export function create_services(service) {
     return http.post(SERVICES_URL,
         {

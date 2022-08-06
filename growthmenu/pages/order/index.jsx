@@ -5,57 +5,12 @@ import ButtonCard from "../../components/buttonCard/buttonCard";
 import SideBar from "../../components/sidebar/sideBar"
 import TopBar from "../../components/topBar/topBar"
 
-import {get_services, create_services, update_service, delete_service} from "../../services/orderServices"
+import {get_services} from "../../services/orderServices"
 
-// const SERVICES = [
-//     {
-//         "id": 0,
-//         "title": "Product Descriptions",
-//         "src": "/images/product.svg"
-//     },
-//     {
-//         "id": 1,
-//         "title": "Blogs & Articles",
-//         "src": "/images/blog.svg"
-//     },
-//     {
-//         "id": 2,
-//         "title": "Email Marketing",
-//         "src": "/images/emailMarketing.svg"
-//     },
-//     {
-//         "id": 3,
-//         "title": "Ad Copy",
-//         "src": "/images/ad.svg"
-//     },
-//     {
-//         "id": 4,
-//         "title": "Web Copy",
-//         "src": "/images/globe.svg"
-//     },
-//     {
-//         "id": 5,
-//         "title": "Video Scripts",
-//         "src": "/images/video.svg"
-//     },
-//
-// ]
 
 const NewOrder = () => {
     const router = useRouter();
-
-    const [add_visibility, setAdd_visibility] = useState("hidden")
-
-    const [edit_visibility, setEdit_visibility] = useState("hidden")
-    const [edit_index, setEdit_Index] = useState("")
-
-    const [new_service, setNewService] = useState({
-        "title": "",
-        "src": "/images/product.svg",
-    },)
-
     const [services, setServices] = useState([]);
-
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -71,66 +26,6 @@ const NewOrder = () => {
         fetchData();
     }, []);
 
-
-    const handleAddService = async e => {
-        e.preventDefault();
-
-        const response = await create_services(new_service)
-        console.log(response)
-
-        // new_service.id = services.length + 1
-
-        new_service.id = response.data.id
-
-        const existing_services = services
-        existing_services.push(new_service)
-
-        setServices(existing_services)
-        setAdd_visibility("hidden")
-        // router.push("/productDescription")
-        console.log(existing_services)
-        router.push({
-            pathname: '/productDescription',
-                query: { id: new_service.id}
-            }
-            )
-
-    };
-
-    const handleEditService = async e => {
-
-        e.preventDefault();
-
-        const existing_services = services;
-
-        // Find index of specific object using findIndex method.
-        const service_index = existing_services.findIndex((p => p.id === edit_index));
-
-        // Update object
-        existing_services[service_index].title = new_service.title
-
-        await update_service(existing_services[service_index])
-        // Save
-        setServices(existing_services)
-        setEdit_visibility("hidden")
-        router.push("/productDescription")
-    };
-
-    const handleDeleteService = async (_service) => {
-
-        await delete_service(_service.id)
-
-        const existing_services = services.filter(s => s.title !== _service.title)
-        setServices(existing_services)
-    };
-
-    const handleFormChange = e => {
-
-        const change = {...new_service}
-
-        change[e.currentTarget.name] = e.currentTarget.value;
-        setNewService(change)
-    }
 
     if (isLoading === true) return (
         <div className="text-center py-8">
@@ -161,14 +56,6 @@ const NewOrder = () => {
                     <div className="flex justify-between pt-8">
                         <div className="text-3xl font-semibold  ">Create A New Order</div>
                         <span/>
-                        <button type="button"
-                                className="text-white bg-LightBlue focus:ring-4 focus:outline-none focus:ring-blue-300
-                        font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                                onClick={() => {
-                                    setAdd_visibility((add_visibility === 'hidden') ? "" : "hidden")
-                                }}>
-                            Add a Service
-                        </button>
                     </div>
                     <div className=" font-normal text-zinc-500 pb-8">
                         Select your Service to create an order
@@ -181,7 +68,7 @@ const NewOrder = () => {
                                     backgroundColor="bg-LightGrey"
                                     icon={
                                         <Image
-                                            src={service.src}
+                                            src="/images/product.svg"
                                             alt=""
                                             height="30px"
                                             width="30px"
@@ -189,92 +76,10 @@ const NewOrder = () => {
                                     }
                                     id={service.id}
                                     title={service.title}
-                                    onClick={url => {
-                                        router.push(url);
-                                    }}
                                 />
-                                <div className="flex justify-between mt-0.5 py-2 px-2 bg-LightBlue rounded drop-shadow">
-                                    <button className="cursor-pointer hover:animate-bounce"
-                                            type="button"
-                                            onClick={() => {
-                                                setEdit_Index(service.id)
-                                                setEdit_visibility((edit_visibility === 'hidden') ? "" : "hidden")
-                                            }}>
-                                        <Image
-                                            src="/images/edit.png"
-                                            alt=""
-                                            height="20px"
-                                            width="20px"
-                                        />
-                                    </button>
-                                    <button className="cursor-pointer hover:animate-bounce"
-                                            type="button"
-                                            onClick={() => {
-                                                handleDeleteService(service)
-                                            }}>
-                                        <Image
-                                            src="/images/delete.png"
-                                            alt=""
-                                            height="20px"
-                                            width="20px"
-                                        />
-                                    </button>
-                                </div>
-                                {/* Edit Service */}
-                                {(edit_index === service.id) ?
-                                    <div className={`${edit_visibility}`}>
-                                        <form onSubmit={handleEditService}>
-                                            <div className="mb-6">
-                                                <label htmlFor="service"
-                                                       className="block mb-2 font-medium">New Service Name
-                                                </label>
-                                                <input type="text"
-                                                       id="edit_service"
-                                                       name="title"
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                       focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                       value={new_service.title}
-                                                       onChange={handleFormChange}
-                                                       required=""/>
-                                            </div>
-                                            <button type="submit"
-                                                    className="text-white bg-DarkBlue hover:bg-blue-800 focus:ring-4
-                                    focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm
-                                    w-full sm:w-auto px-5 py-2.5 text-center ">Edit Service
-                                            </button>
-                                        </form>
-                                    </div> : <div/>}
-
                             </div>
 
                         ))}
-
-                        <div className={`${add_visibility} p-8`}>
-                            <div className="w-full flex flex-col bg-LightGrey items-center justify-center py-5
-                                   rounded-lg drop-shadow">
-                                <form onSubmit={handleAddService}>
-                                    <div className="mb-6">
-                                        <label htmlFor="add_service"
-                                               className="block mb-2 font-medium">Service Name
-                                        </label>
-                                        <input type="text"
-                                               id="add_service"
-                                               name="title"
-                                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                       focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                               value={new_service.title}
-                                               onChange={handleFormChange}
-                                               required=""/>
-                                    </div>
-                                    <button type="submit"
-                                            className="text-white bg-DarkBlue hover:bg-blue-800 focus:ring-4
-                                    focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm
-                                    w-full sm:w-auto px-5 py-2.5 text-center ">Add Service
-                                    </button>
-                                </form>
-
-                            </div>
-                        </div>
                     </div>
 
                 </div>
