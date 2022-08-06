@@ -13,7 +13,7 @@ const SideBar = () => {
                 className="flex p-3 items-center justify-center my-0.5 text-2xl font-semibold text-DarkBlue whitespace-nowrap dark:text-white">
         <span className="border-r-2 pr-1">
           <Image
-              src="/images/growthmenu.svg"
+              src="/images/growthMenu.svg"
               alt=""
               height={"20px"}
               width={"20px"}
