@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import TextIconCard from '../../components/textIconCard/textIconCard'
 import Image from "next/image"
-import Plus from '../../public/images/plus'
+import Plus from '../../public/images/sidebar/plus'
 import Tab from '../../components/tab/tab'
 import ProductDescriptiontable from '../../components/productTable/productTable';
 import axios from "../api/axios";

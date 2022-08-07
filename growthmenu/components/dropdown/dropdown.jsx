@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 const Dropdown = ({value, data, placeholder, styleClass, onChange}) => {
 
@@ -11,7 +10,6 @@ const Dropdown = ({value, data, placeholder, styleClass, onChange}) => {
     return (
         <div>
             <select
-                // value={value}
                 className={styleClass}
                 onChange={handleChange}
                 >
@@ -27,19 +25,5 @@ const Dropdown = ({value, data, placeholder, styleClass, onChange}) => {
         </div>
     )
 };
-
-// Dropdown.propTypes = {
-//     value: PropTypes.string,
-//     placeholder: PropTypes.string,
-//     data: PropTypes.array.isRequired,
-//     styleClass: PropTypes.string,
-//     onChange: PropTypes.func.isRequired
-// };
-//
-// Dropdown.defaultProps = {
-//     value: '',
-//     styleClass: '',
-//     placeholder: ''
-// };
 
 export default Dropdown;
