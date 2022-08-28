@@ -9,7 +9,7 @@ import Link from "next/link";
 // Custom Imports
 import Navbar from "../../components/navbar";
 import Breadcrumb from "../../components/breadcrumb";
-import Footer from "../../components/footer";
+import Footer from "../../components/footer/footer";
 
 import {login} from "../../services/userServices"
 

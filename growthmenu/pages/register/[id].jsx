@@ -1,5 +1,5 @@
 import Profile_Component from "../../components/Profile/profile";
-import Footer from "../../components/footer";
+import Footer from "../../components/footer/footer";
 
 
 const Profile = () => {

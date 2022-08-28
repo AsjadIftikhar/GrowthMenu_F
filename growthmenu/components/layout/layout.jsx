@@ -1,8 +1,6 @@
 import React from "react";
 import SideBar from "../sidebar/sideBar";
 import TopBar from "../topBar/topBar";
-import ButtonCard from "../buttonCard/buttonCard";
-import Image from "next/image";
 
 const Layout = ({children}) => {
     return (

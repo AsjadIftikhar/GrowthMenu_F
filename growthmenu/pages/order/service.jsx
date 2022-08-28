@@ -9,6 +9,8 @@ import ServiceDescription from "../../components/servicedescription";
 import FAQs from "../../components/faqs";
 import Loader from "../../components/loader";
 import Layout from "../../components/layout/layout";
+import Footer from "../../components/footer/footer";
+import Link from "next/link";
 
 
 const Service = () => {
@@ -52,9 +54,21 @@ const Service = () => {
                     <Carousal/>
                     <hr className="w-4/5 "/>
                     <ServiceDescription service={service}/>
-                    <hr className="w-1/2 "/>
+                    <hr className="w-1/2"/>
                     <FAQs faqs={service.service_faq}/>
+
+                    <Link href={{
+                        pathname: "/order/form",
+                        query: {id: router.query.id}
+                    }}>
+                        <div className="w-1/2 items-center px-16 py-6 font-semibold rounded text-center text-white
+                                        bg-DarkBlue focus:ring-4 focus:ring-blue-200
+                                        hover:bg-blue-800 hover:cursor-pointer">
+                            Start Your Order
+                        </div>
+                    </Link>
                 </div>
+
             </Layout>
         </React.Fragment>
 

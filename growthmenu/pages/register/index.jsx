@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import Navbar from "../../components/navbar";
 import Breadcrumb from "../../components/breadcrumb";
-import Footer from "../../components/footer";
+import Footer from "../../components/footer/footer";
 
 import {login, register} from "../../services/userServices"
 

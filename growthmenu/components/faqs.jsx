@@ -7,7 +7,7 @@ const FAQs = ({faqs}) => {
         <React.Fragment>
             <h2 className="text-2xl">FAQS</h2>
 
-            <div className="w-1/2">
+            <div className="w-1/2 mb-32">
                 <Accordion alwaysOpen={true}>
                     {
                         faqs && faqs.map(faq => (
