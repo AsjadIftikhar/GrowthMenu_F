@@ -1,15 +1,13 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-
 
 
 const ButtonCard = ({icon, id, title, backgroundColor}) => {
         return (
             // eslint-disable-next-line @next/next/link-passhref
-            <Link  href={{
+            <Link href={{
                 pathname: "/order/service",
-                query: { id: id}
+                query: {id: id}
             }}>
                 <div
                     className={`w-full flex flex-col ${backgroundColor} items-center justify-center py-5

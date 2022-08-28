@@ -1,26 +1,35 @@
 import React from 'react';
-
-import {Accordion, AccordionTab} from 'primereact/accordion';
+import {Accordion} from "flowbite-react";
 
 
 const FAQs = ({faqs}) => {
     return (
         <React.Fragment>
             <h2 className="text-2xl">FAQS</h2>
-            <Accordion multiple activeIndex={0} className="w-1/2">
 
-                {faqs && faqs.map(faq => (
-                    <AccordionTab header={faq.question} key={faq.id}>
-                        <div>
-                            <p className="text-gray-600">{faq.answer}</p>
-                        </div>
-                    </AccordionTab>
-
-                ))}
-            </Accordion>
+            <div className="w-1/2">
+                <Accordion alwaysOpen={true}>
+                    {
+                        faqs && faqs.map(faq => (
+                            <Accordion.Panel key={faq}>
+                                <Accordion.Title>
+                                    {faq.question}
+                                </Accordion.Title>
+                                <Accordion.Content>
+                                    <p className="mb-2 text-gray-500 dark:text-gray-400">
+                                        {faq.answer}
+                                    </p>
+                                </Accordion.Content>
+                            </Accordion.Panel>
+                        ))
+                    }
+                </Accordion>
+            </div>
         </React.Fragment>
 
     );
 }
 
 export default FAQs;
+
+

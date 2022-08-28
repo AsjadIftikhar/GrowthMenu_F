@@ -30,20 +30,24 @@ a {
         @apply text-2xl;
         @apply py-4;
     }
+
     .post-body p {
         @apply text-lg;
         @apply py-2;
     }
+
     .post-body a {
         @apply text-blue-500;
         @apply py-2;
         @apply hover:underline
     }
+
     .post-body ul, ol {
         @apply leading-8;
         @apply list-disc;
         @apply list-inside;
     }
+
     .post-body pre {
         background: #f4f4f4;
         padding: 20px;
@@ -51,4 +55,8 @@ a {
         line-height: 2.3;
     }
 }
+.tab .p-menuitem-text {
+}
 
+.tab .p-tabmenu {
+}

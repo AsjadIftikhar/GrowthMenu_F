@@ -8,8 +8,21 @@ import TopBar from "../../components/topBar/topBar"
 import {get_services, create_services, update_service, delete_service} from "../../services/orderServices"
 
 
+import { TabMenu } from 'primereact/tabmenu';
+
+const items = [
+    {label: 'Home'},
+    {label: 'Calendar'},
+    {label: 'Edit'},
+    {label: 'Documentation'},
+    {label: 'Settings'}
+];
+
+
 const NewOrder = () => {
     const router = useRouter();
+
+    const [activeIndex, setActiveIndex] = useState(0)
 
     const [add_visibility, setAdd_visibility] = useState("hidden")
 
@@ -126,7 +139,7 @@ const NewOrder = () => {
                     <TopBar/>
 
                     <div className="flex justify-between pt-8">
-                        <div className="text-3xl font-semibold  ">Create A New Order</div>
+                        <div className="text-3xl font-semibold  ">Services</div>
                         <span/>
                         <button type="button"
                                 className="text-white bg-LightBlue focus:ring-4 focus:outline-none focus:ring-blue-300
@@ -137,9 +150,11 @@ const NewOrder = () => {
                             Add a Service
                         </button>
                     </div>
-                    <div className=" font-normal text-zinc-500 pb-8">
-                        Select your Service to create an order
-                    </div>
+
+
+                    <TabMenu className="tab" model={items} activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}/>
+
+
                     <div className="w-3/4 grid grid-cols-3 bg-white px-24 rounded-lg">
                         {services.map(service => (
                             // eslint-disable-next-line react/jsx-key
